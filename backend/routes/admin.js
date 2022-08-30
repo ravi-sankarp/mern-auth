@@ -10,6 +10,10 @@ router.post('/login', adminController.adminLogin);
 //route to get user data for the admin
 router.get('/getuserdata', adminProtect, adminController.getUserData);
 
+//route for adding new users
+router.post('/addnewuser', adminProtect, adminController.addNewUser);
+
+
 //route for editing user data
 router.put('/edituserdata/:id', adminProtect, adminController.editUser);
 

@@ -1,0 +1,28 @@
+.container-register {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    max-width: 500px;
+    width: 100%;
+    margin: auto;
+}
+
+.container-register>form {
+    width: 80%;
+    height: max-content;
+    border: 1px solid #dfdfdf;
+    padding: 20px;
+    border-radius: 5px;
+    background: #fff;
+}
+ .container-register p{
+    color: red;
+ }
+
+
+form button {
+    background: #0563b4 !important;
+}
+
