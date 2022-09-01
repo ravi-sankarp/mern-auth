@@ -10,55 +10,21 @@ import { useState } from 'react';
 import { Button, Form, Spinner, Table } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { MdBorderColor, MdDeleteForever, MdLibraryAdd } from 'react-icons/md';
-import { toast } from 'react-toastify';
-import {
-   useAdminDeleteUserMutation,
-   useAdminGetUserDataQuery
-} from '../../redux/features/api/apiSlice';
+import { useAdminGetUserDataQuery } from '../../redux/features/api/apiSlice';
 import './admin.css';
+import ModalPosts from './ModalPosts';
 
 function AdminHomeLayout() {
    const navigate = useNavigate();
    const [search, setSearch] = useState('');
+   const [open, setOpen] = useState(false);
+   const [id, setId] = useState('');
+   const [name, setName] = useState('');
    const handleSearch = (e) => {
       setSearch(e.target.value.toLowerCase());
    };
    const { data, isLoading, isFetching, isSuccess, isError, error } = useAdminGetUserDataQuery();
-   const [adminDeleteUser, { isLoading: isLoadingDelete }] = useAdminDeleteUserMutation();
 
-   const handleDelete = async (id) => {
-      if (!isLoadingDelete) {
-         try {
-            const res = await adminDeleteUser(id).unwrap();
-            if (res.status === 'Success') {
-               toast.success('Deleted New User', {
-                  position: 'bottom-right',
-                  autoClose: 2000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                  closeButton: true
-               });
-               navigate('/adminhome');
-            }
-         } catch (err) {
-            console.log(err);
-            toast.error(`${err.data.message}`, {
-               position: 'bottom-right',
-               autoClose: 2000,
-               hideProgressBar: false,
-               closeOnClick: true,
-               pauseOnHover: true,
-               draggable: true,
-               progress: undefined,
-               theme: 'colored',
-               closeButton: true
-            });
-         }
-      }
-   };
    let content;
    if (isLoading || isFetching) {
       content = (
@@ -95,7 +61,11 @@ function AdminHomeLayout() {
                            </Button>
                         </Link>
                         <Button
-                           onClick={() => handleDelete(user._id)}
+                           onClick={() => {
+                              setId(user._id);
+                              setOpen(true);
+                              setName(` ${user.firstName} ${user.lastName}`);
+                           }}
                            className="btn-danger btn-sm mt-sm-2 mt-md-0"
                         >
                            <MdDeleteForever />
@@ -145,7 +115,11 @@ function AdminHomeLayout() {
                         </Link>
 
                         <Button
-                           onClick={() => handleDelete(user.id)}
+                           onClick={() => {
+                              setId(user._id);
+                              setOpen(true);
+                              setName(` ${user.firstName} ${user.lastName}`);
+                           }}
                            className="btn-danger btn-sm mt-sm-2 mt-md-0"
                         >
                            <MdDeleteForever />
@@ -178,6 +152,7 @@ function AdminHomeLayout() {
             </Form>
             {content}
          </div>
+         {open && <ModalPosts id={id} setOpen={setOpen} open={open} name={name} />}
       </section>
    );
 }

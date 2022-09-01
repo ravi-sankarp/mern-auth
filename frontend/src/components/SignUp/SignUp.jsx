@@ -15,7 +15,7 @@ import './signup.css';
 
 function SignUp() {
    const dispatch = useDispatch();
-   const navigate = useNavigate;
+   const navigate = useNavigate();
 
    const [userSignup, { isLoading }] = useUserSignupMutation();
 
@@ -41,7 +41,7 @@ function SignUp() {
          try {
             const res = await userSignup(data).unwrap();
             if (res.status === 'Success') {
-               dispatch(setToken(res.token));
+               dispatch(setToken({ token: res.token, admin: res.admin }));
                toast.success('Registration Successfull', {
                   position: 'bottom-right',
                   autoClose: 2000,
@@ -56,7 +56,8 @@ function SignUp() {
             }
          } catch (err) {
             console.log(err);
-            toast.error(`${err.data.message}`, {
+            const error = err.data.message;
+            toast.error(error, {
                position: 'bottom-right',
                autoClose: 2000,
                hideProgressBar: false,
