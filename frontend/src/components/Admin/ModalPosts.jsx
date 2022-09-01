@@ -17,7 +17,7 @@ function ModalPosts({ setOpen, open, id, name }) {
    const handleDelete = async () => {
       if (!isLoadingDelete) {
          try {
-             setOpen(false);
+            setOpen(false);
             const res = await adminDeleteUser(id).unwrap();
             if (res.status === 'success') {
                toast.success('Deleted User', {
@@ -53,7 +53,9 @@ function ModalPosts({ setOpen, open, id, name }) {
          <Modal.Header closeButton onClick={() => setOpen(false)} />
          <>
             <Modal.Body className="d-flex flex-column">
-               <p className="fw-bold">Are you sure you want to delete{name}</p>
+               <p className="fw-bold">
+                  Are you sure you want to delete<p className="h4 mt-3 text-danger">{name}</p>
+               </p>
             </Modal.Body>
             <Modal.Footer>
                <Button onClick={() => setOpen(false)}>Cancel</Button>
