@@ -20,12 +20,12 @@ function SignUp() {
    const [userSignup, { isLoading }] = useUserSignupMutation();
 
    const schema = yup.object().shape({
-      firstName: yup.string().min(4).required('First Name is required '),
-      lastName: yup.string().min(1).required(),
-      email: yup.string().email().required(),
-      phoneNumber: yup.string().matches(/^[6-9]\d{9}$/, 'Enter a valid phone number'),
-      password: yup.string().min(4).max(15).required(),
-      confirmPassword: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match')
+     firstName: yup.string().min(4).max(6).required('First Name is required '),
+     lastName: yup.string().min(1).max(6).required(),
+     email: yup.string().email().required(),
+     phoneNumber: yup.string().matches(/^[6-9]\d{9}$/, 'Enter a valid phone number'),
+     password: yup.string().min(4).max(15).required(),
+     confirmPassword: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match')
    });
    const {
       register,
@@ -73,7 +73,7 @@ function SignUp() {
    };
    return (
       <div className="mt-5 container-register">
-         <Form onSubmit={handleSubmit(formSubmit)} autoComplete="off" noValidate>
+         <Form onSubmit={handleSubmit(formSubmit)} autoComplete="off" noValidate={true}>
             <div className="text-center fx-bolder text-primary h3">REGISTER</div>
             <Form.Group className="mb-3" controlId="formBasicFirstName">
                <Form.Label>First Name</Form.Label>

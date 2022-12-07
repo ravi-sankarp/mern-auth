@@ -4,6 +4,8 @@
 #ignore prettierc
 .prettierrc
 
+/backend/build/*
+
 #env config
 config.env
 
